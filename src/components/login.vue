@@ -32,11 +32,11 @@ export default {
   data() {
     return {
       loginForm: {
-        username: '',
-        password: ''
+        username: 'admin',
+        password: '123456'
       },
       rules: {
-        //账号验证
+        // 账号验证
         username: [
           { required: true, message: '请输入用户名', trigger: 'blur' }
         ],
@@ -77,7 +77,7 @@ export default {
 #login-container {
   background-color: #2b4b6b;
   height: 100%;
-  //   表单部分
+  // 表单部分
   #login-box {
     width: 450px;
     height: 304px;
@@ -87,7 +87,7 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    //   logo部分
+    // logo部分
     #login-logo {
       width: 130px;
       height: 130px;
