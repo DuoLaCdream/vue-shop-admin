@@ -16,5 +16,6 @@ html,body,#app {
   }
 /* 表格数据 */
 .el-table {
-    font-size: 12px
+    font-size: 12px;
+    margin-top: 20px
 }

@@ -313,7 +313,7 @@ export default {
     },
     // 删除user用户
     removeUser(id) {
-      this.$confirm('此操作将永久删除该用户, 是否继续?', {
+      this.$confirm('此操作将永久删除该用户', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
