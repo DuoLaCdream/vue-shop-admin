@@ -31,13 +31,10 @@
               <span>{{item.authName}}</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item
-                :index="item2.path"
-                v-for="item2 in item.children"
-                :key="item2.id"
-              >
-              <i class="el-icon-menu"></i>
-              {{item2.authName}}</el-menu-item>
+              <el-menu-item :index="item2.path" v-for="item2 in item.children" :key="item2.id">
+                <i class="el-icon-menu"></i>
+                {{item2.authName}}
+              </el-menu-item>
             </el-menu-item-group>
           </el-submenu>
         </el-menu>
@@ -60,7 +57,7 @@ export default {
       show: true,
       leftnav: [],
       //字体图标
-      icon:['users','tijikongjian','shangpin','danju','baobiao']
+      icon: ['users', 'tijikongjian', 'shangpin', 'danju', 'baobiao']
     }
   },
   methods: {
@@ -82,12 +79,11 @@ export default {
     // 发送axios得到左侧菜单数据
     async getlist() {
       const { data } = await this.$http.get('menus')
-      console.log(data)
+
       if (data.meta.status !== 200) {
         this.$message(data.meta.msg)
       }
       this.leftnav = data.data
-      console.log(this.leftnav)
     }
   }
 }
@@ -122,7 +118,9 @@ export default {
   }
   // 左侧样式
   .el-aside {
-    .el-menu{ width: 200px;}
+    .el-menu {
+      width: 200px;
+    }
     background-color: rgb(51, 55, 68);
     #navFlex {
       height: 25px;

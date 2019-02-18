@@ -6,3 +6,15 @@ html,body,#app {
 .el-menu-item {
     width: 200px;
 }
+/* 右侧背景 */
+.el-main {
+    background-color: rgb(234, 237, 241);
+}
+/* 卡片画布 */
+.el-card {
+    margin-top: 20px
+  }
+/* 表格数据 */
+.el-table {
+    font-size: 12px
+}
