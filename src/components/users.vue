@@ -78,7 +78,12 @@
                 placement="top"
                 :enterable="false"
               >
-                <el-button type="warning" icon="el-icon-setting" size="mini"></el-button>
+                <el-button
+                  type="warning"
+                  icon="el-icon-setting"
+                  size="mini"
+                  @click="feipeisole(info.row.id)"
+                ></el-button>
               </el-tooltip>
             </template>
           </el-table-column>
@@ -146,11 +151,37 @@
       </el-form>
 
       <span slot="footer" class="dialog-footer">
-         <el-button @click="reviseNO">取 消</el-button>
-         <el-button type="primary" @click="reviseOK()">确 定</el-button> 
+        <el-button @click="reviseNO">取 消</el-button>
+        <el-button type="primary" @click="reviseOK()">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配用户弹出层 -->
+    <el-dialog title="分配角色" :visible.sync="usersole" width="50%">
+      <el-form
+        :model="fenpeisoledata"
+        :rules="addrules"
+        ref="addruleFormref"
+        label-width="100px"
+        class="demo-ruleForm"
+      >
+        <el-form-item label="用户名称：">{{fenpeisoledata.username}}</el-form-item>
+        <el-form-item label="分配新角色：" prop="rid">
+          <el-select v-model="fenpeisoledata.rid" placeholder="请选择">
+            <el-option
+              v-for="item in fenpeisoleoptions"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
 
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="feipeiNO">取 消</el-button>
+        <el-button type="primary" @click="feipeiOK">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 <script>
@@ -192,6 +223,10 @@ export default {
         mobile: '',
         id: ''
       },
+      //分配用户
+      fenpeisoledata: {},
+      //分配用户角色信息
+      fenpeisoleoptions: [],
       // 添加用户数据验证
       addrules: {
         // 账号验证
@@ -252,7 +287,7 @@ export default {
             trigger: 'blur'
           }
         ]
-      },
+      }
     }
   },
   methods: {
@@ -329,6 +364,36 @@ export default {
         .catch(() => {
           this.$message('已取消删除')
         })
+    },
+    //查询分配用户信息
+    async feipeisole(id) {
+      this.usersole = true
+      const { data } = await this.$http.get('users/' + id)
+      if (data.meta.status !== 200) {
+        return this.$message.error(data.meta.msg)
+      }
+      this.fenpeisoledata = data.data
+      const { data: res } = await this.$http.get('roles')
+      if (res.meta.status !== 200) {
+        return this.$message.error(res.meta.msg)
+      }
+      this.fenpeisoleoptions = res.data
+    },
+    //分配角色取消
+    feipeiNO() {
+      this.usersole = false
+    },
+    // 分配角色确定
+    async feipeiOK() {
+      const { data } = await this.$http.put(
+        'users/' + this.fenpeisoledata.id + '/role' ,{rid : this.fenpeisoledata.rid}
+      )
+      if (data.meta.status !== 200) {
+        return this.$message.error(data.meta.msg)
+      }
+      this.getUesr()
+      this.$message.success(data.meta.msg)
+      this.usersole = false
     }
   }
 }
